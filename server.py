@@ -1,10 +1,11 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
 
 class TemperatureData(BaseModel):
-    temperature: float
+    c_temperature: float
+    f_temperature: float
 
 @app.get("/")
 async def root():
@@ -12,7 +13,7 @@ async def root():
 
 @app.post("/temperature")
 async def receive_temperature(data: TemperatureData):
-    print(f"Received temperature: {data.temperature}°C")
+    print(f"Received temperature: {data.c_temperature}°C {data.f_temperature}")
     return {"message": "Data received successfully"}
 
 if __name__ == "__main__":

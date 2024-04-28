@@ -39,7 +39,10 @@ while True:
     lcd.pos_puts(6, 1, "{:.2f} F".format(temp[1]))
     
     # Send data to server
-    data = {'temperature': temp[1]}
+    data = {
+        'c_temperature': temp[0],
+        'f_temperature': temp[1]
+        }
     try:
         response = urequests.post(url, json=data)  # Send data as JSON
         print(response.text)
