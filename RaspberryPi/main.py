@@ -14,10 +14,10 @@ lcd.clrscr()
 temp_sensor = ADC(Pin(28))  # ADC on GP28/ADC2
 
 # Connect pico w to internet
-connect_to_internet()
+connect_to_internet('ala247', 'coolfinch947')
 
 # Server url
-url = 'http://172.20.10.12:8000/temperature'
+url = 'http://192.168.0.105:8000/temperature'
 
 
 # Function that reads temperature from LM35DZ IC
