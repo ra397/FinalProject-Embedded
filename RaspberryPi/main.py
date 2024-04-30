@@ -17,7 +17,7 @@ temp_sensor = ADC(Pin(28))  # ADC on GP28/ADC2
 connect_to_internet('ala247', 'coolfinch947')
 
 # Server url
-url = 'http://192.168.0.105:8000/temperature'
+url = 'http://192.168.0.101:8000/temperature'
 
 
 # Function that reads temperature from LM35DZ IC

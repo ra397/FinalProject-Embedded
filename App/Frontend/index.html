@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Display</title>
+</head>
+<body>
+    <h1>Current Temperature</h1>
+    <div id="temperatureDisplay">Loading temperature data...</div>
+
+    <script>
+        async function fetchTemperature() {
+            try {
+                const response = await fetch('/temperature');
+                const data = await response.json();
+                if (data.c_temperature && data.f_temperature) {
+                    document.getElementById('temperatureDisplay').innerHTML = 
+                        `Celsius: ${data.c_temperature} °C, Fahrenheit: ${data.f_temperature} °F`;
+                } else {
+                    document.getElementById('temperatureDisplay').innerHTML = data.message;
+                }
+            } catch (error) {
+                console.log('Error fetching temperature:', error);
+                document.getElementById('temperatureDisplay').innerHTML = 'Failed to load temperature data.';
+            }
+        }
+
+        // Fetch temperature on page load and every 5 seconds thereafter
+        fetchTemperature();
+        setInterval(fetchTemperature, 1);
+    </script>
+</body>
+</html>
