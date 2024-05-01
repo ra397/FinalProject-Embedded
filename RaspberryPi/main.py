@@ -41,8 +41,8 @@ def read_temperature(sensor):
 
 forecast_data = get_weather_forecast(URL)
 daily_forecast_data = process_forecast_data(forecast_data)
-print(daily_forecast_data)
-
+forecast_index = 0
+old_forecast_index = 0
 
 while True:
     # Get tempreture reading
@@ -53,34 +53,25 @@ while True:
     yValue = yAxis.read_u16()
     buttonValue = button.value()
 
-    # Update xStatus based on xValue
-    if xValue <= 600:
-        xStatus = "left"
-    elif xValue >= 60000:
-        xStatus = "right"
-    else:
-        xStatus = "middle"  
-
     # Update yStatus based on yValue
     if yValue <= 600:
-        yStatus = "up"
+        if displayMode == 1:
+            forecast_index -= 1
+        if forecast_index < 0:
+            forecast_index = len(daily_forecast_data) - 1  # Wrap to the last item
     elif yValue >= 60000:
-        yStatus = "down"
-    else:
-        yStatus = "middle"  
+        if displayMode == 1:
+            forecast_index += 1
+  
 
     # Update buttonStatus based on buttonValue
     if buttonValue == 0:
-        buttonStatus = "pressed"
-        if displayMode == 0:
-            displayMode = 1
-        else:
-            displayMode = 0
-    else:
-        buttonStatus = "not pressed"
+        displayMode = 1 - displayMode
+ 
     
     # Dispaly to LCD
-    print(displayMode)
+    forecast_index = forecast_index % len(daily_forecast_data)
+    print(forecast_index)
     if displayMode == 0:
         if oldDisplayMode != displayMode: # clear screen if dispaly mode has changed
             lcd.clrscr()
@@ -89,26 +80,54 @@ while True:
     else:
         if oldDisplayMode != displayMode: # clear screen if dispaly mode has changed
             lcd.clrscr()
-        lcd.pos_puts(0, 0, "Weather Forecast:")
-        lcd.pos_puts(0, 1, "Scroll w Joystick")
+        if forecast_index == 0:
+            lcd.pos_puts(0, 0, "Weather Forecast:")
+            lcd.pos_puts(0, 1, "Scroll w Joystick")
+        elif forecast_index == 1:
+            if forecast_index != old_forecast_index:
+                lcd.clrscr()
+            lcd.pos_puts(0, 0, "Day 1")
+            lcd.pos_puts(0, 1, "DATA")
+        elif forecast_index == 2:
+            if forecast_index != old_forecast_index:
+                lcd.clrscr()
+            lcd.pos_puts(0, 0, "Day 2")
+            lcd.pos_puts(0, 1, "DATA")
+        elif forecast_index == 3:
+            if forecast_index != old_forecast_index:
+                lcd.clrscr()
+            lcd.pos_puts(0, 0, "Day 3")
+            lcd.pos_puts(0, 1, "DATA")
+        elif forecast_index == 4:
+            if forecast_index != old_forecast_index:
+                lcd.clrscr()
+            lcd.pos_puts(0, 0, "Day 4")
+            lcd.pos_puts(0, 1, "DATA")
+        elif forecast_index == 5:
+            if forecast_index != old_forecast_index:
+                lcd.clrscr()
+            lcd.pos_puts(0, 0, "Day 5")
+            lcd.pos_puts(0, 1, "DATA")
     
     # Send data to server
-    if timeCount == 100:
-        lcd.clrscr()
-        lcd.pos_puts(0, 0, "Sending data")
-        lcd.pos_puts(0, 1, "to server ...")
-        data = {
-            'c_temperature': temp[0],
-            'f_temperature': temp[1]
-            }
-        try:
-            response = urequests.post(url, json=data)  # Send data as JSON
-            print(response.text)
-            response.close()
-        except Exception as e:
-            print("Failed to send data:", e)
-        timeCount = 0
+    
+#     if timeCount == 100:
+#         lcd.clrscr()
+#         lcd.pos_puts(0, 0, "Sending data")
+#         lcd.pos_puts(0, 1, "to server ...")
+#         data = {
+#             'c_temperature': temp[0],
+#             'f_temperature': temp[1]
+#             }
+#         try:
+#             response = urequests.post(url, json=data)  # Send data as JSON
+#             print(response.text)
+#             response.close()
+#         except Exception as e:
+#             print("Failed to send data:", e)
+#         timeCount = 0
     
     oldDisplayMode = displayMode
+    old_forecast_index = forecast_index
     timeCount += 1
     utime.sleep(0.1)
