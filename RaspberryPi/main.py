@@ -27,7 +27,7 @@ timeCount = 0
 connect_to_internet('ala247', 'coolfinch947')
 
 # Server url
-url = 'http://192.168.0.101:8000/temperature'
+url = 'http://192.168.0.103:8000/temperature'
 
 
 # Function that reads temperature from LM35DZ IC
@@ -110,21 +110,18 @@ while True:
     
     # Send data to server
     
-#     if timeCount == 100:
-#         lcd.clrscr()
-#         lcd.pos_puts(0, 0, "Sending data")
-#         lcd.pos_puts(0, 1, "to server ...")
-#         data = {
-#             'c_temperature': temp[0],
-#             'f_temperature': temp[1]
-#             }
-#         try:
-#             response = urequests.post(url, json=data)  # Send data as JSON
-#             print(response.text)
-#             response.close()
-#         except Exception as e:
-#             print("Failed to send data:", e)
-#         timeCount = 0
+    if timeCount == 10:
+        data = {
+            'c_temperature': temp[0],
+            'f_temperature': temp[1]
+            }
+        try:
+            response = urequests.post(url, json=data)  # Send data as JSON
+            print(response.text)
+            response.close()
+        except Exception as e:
+            print("Failed to send data:", e)
+        timeCount = 0
     
     oldDisplayMode = displayMode
     old_forecast_index = forecast_index

@@ -30,4 +30,4 @@ async def receive_temperature(data: TemperatureData):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="192.168.0.101", port=8000)
+    uvicorn.run(app, host="192.168.0.103", port=8000)
