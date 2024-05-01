@@ -71,7 +71,6 @@ while True:
     
     # Dispaly to LCD
     forecast_index = forecast_index % len(daily_forecast_data)
-    print(forecast_index)
     if displayMode == 0:
         if oldDisplayMode != displayMode: # clear screen if dispaly mode has changed
             lcd.clrscr()
@@ -86,28 +85,28 @@ while True:
         elif forecast_index == 1:
             if forecast_index != old_forecast_index:
                 lcd.clrscr()
-            lcd.pos_puts(0, 0, "Day 1")
-            lcd.pos_puts(0, 1, "DATA")
+            lcd.pos_puts(0, 0, f"{daily_forecast_data[forecast_index]['Date']}: {daily_forecast_data[forecast_index]['Temp']} F")
+            lcd.pos_puts(0, 1, f"{daily_forecast_data[forecast_index]['Description']}")
         elif forecast_index == 2:
             if forecast_index != old_forecast_index:
                 lcd.clrscr()
-            lcd.pos_puts(0, 0, "Day 2")
-            lcd.pos_puts(0, 1, "DATA")
+            lcd.pos_puts(0, 0, f"{daily_forecast_data[forecast_index]['Date']}: {daily_forecast_data[forecast_index]['Temp']} F")
+            lcd.pos_puts(0, 1, f"{daily_forecast_data[forecast_index]['Description']}")
         elif forecast_index == 3:
             if forecast_index != old_forecast_index:
                 lcd.clrscr()
-            lcd.pos_puts(0, 0, "Day 3")
-            lcd.pos_puts(0, 1, "DATA")
+            lcd.pos_puts(0, 0, f"{daily_forecast_data[forecast_index]['Date']}: {daily_forecast_data[forecast_index]['Temp']} F")
+            lcd.pos_puts(0, 1, f"{daily_forecast_data[forecast_index]['Description']}")
         elif forecast_index == 4:
             if forecast_index != old_forecast_index:
                 lcd.clrscr()
-            lcd.pos_puts(0, 0, "Day 4")
-            lcd.pos_puts(0, 1, "DATA")
+            lcd.pos_puts(0, 0, f"{daily_forecast_data[forecast_index]['Date']}: {daily_forecast_data[forecast_index]['Temp']} F")
+            lcd.pos_puts(0, 1, f"{daily_forecast_data[forecast_index]['Description']}")
         elif forecast_index == 5:
             if forecast_index != old_forecast_index:
                 lcd.clrscr()
-            lcd.pos_puts(0, 0, "Day 5")
-            lcd.pos_puts(0, 1, "DATA")
+            lcd.pos_puts(0, 0, f"{daily_forecast_data[forecast_index]['Date']}: {daily_forecast_data[forecast_index]['Temp']} F")
+            lcd.pos_puts(0, 1, f"{daily_forecast_data[forecast_index]['Description']}")
     
     # Send data to server
     
