@@ -3,6 +3,7 @@ import time
 from machine import ADC, Pin, Timer
 import urequests
 from connect_to_wifi import *
+from get_forecast import *
 
 
 # Initialize the LCD
@@ -28,6 +29,10 @@ def read_temperature(sensor):
     c_temperature = voltage * 100  # Convert voltage to temperature in Celsius (10 mV per °C)
     f_temperature = (c_temperature * 9/5) + 32
     return c_temperature, f_temperature
+
+forecast_data = get_weather_forecast(URL)
+daily_forecast_data = process_forecast_data(forecast_data)
+print(daily_forecast_data)
 
 
 while True:
